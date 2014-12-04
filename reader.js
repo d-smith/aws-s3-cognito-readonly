@@ -1,5 +1,5 @@
 var AWS = require('aws-sdk');
-var fs = require('fs');
+var _ = require('underscore');
 
 var cognitoParams = {
   AccountId: "930295567417",
@@ -31,6 +31,10 @@ s3.listObjects(bucketParams, function(err, data) {
 	console.log(err, err.stack);
   }
   else {
-    console.log(data);
+    console.log(data.Contents);
+    var mappingObj = _.filter(data.Contents, function(obj) {
+	return obj.Key === 'mapping.json';
+    });
+    console.log(mappingObj[0]);
   }
 });
