@@ -19,22 +19,16 @@ AWS.config.credentials.get(function(err) {
 
 var s3 = new AWS.S3();
 
-var bucketParams = {
-  Bucket: 'xt-client-mapping'
+
+var objParams = {
+  Bucket : 'xt-client-mapping',
+  Key: 'mapping.json'
 };
 
-console.log("list objects");
-
-s3.listObjects(bucketParams, function(err, data) {
+s3.getObject(objParams, function(err,data) {
   if(err) {
-	console.log('error listing objects');
-	console.log(err, err.stack);
-  }
-  else {
-    console.log(data.Contents);
-    var mappingObj = _.filter(data.Contents, function(obj) {
-	return obj.Key === 'mapping.json';
-    });
-    console.log(mappingObj[0]);
+    console.log(err);
+  } else {
+    console.log(data);
   }
 });
